@@ -15,7 +15,7 @@ shinyUI(
                     choices=c("Region","Unit","Segment","Business", "Year")),
         #choices=c("Year")),
         hr(),
-        helpText("Data from Lesson1 .")
+        helpText("Data from Lesson1.")
       ),
       # Create a spot for the barplot
       mainPanel(

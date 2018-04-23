@@ -10,7 +10,7 @@ shinyServer(function(input, output) {
     ) +
       geom_point() +
       geom_smooth()
-    g + labs(x="Premium",y="Expenses")
+    g + labs(x="Premium",y="Expenses ")
 
   })
 })
