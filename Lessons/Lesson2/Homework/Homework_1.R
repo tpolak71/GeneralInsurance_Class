@@ -3,8 +3,11 @@
 # __Commit__ it to your repository into `Lessons/Lesson2/Homework`.
 
 ## Code
-
-dt_KPI_raw %>%  mutate(uwr=Premium-Expenses-Losses) %>% 
+library(dplyr)
+library(ggplot2)
+row.has.na <- apply(dt_KPI_raw, 1, function(x){any(is.na(x))}) 
+dt_KPI_raw <- dt_KPI_raw[!row.has.na,]
+dt_KPI_raw[dt_KPI_raw$Unit=="Unit7",] %>%  mutate(uwr=Premium-Expenses-Losses) %>% 
   group_by(Year) %>% 
   summarize(uwr = sum(uwr, na.rm = TRUE)) %>%
   arrange(uwr)%>%
