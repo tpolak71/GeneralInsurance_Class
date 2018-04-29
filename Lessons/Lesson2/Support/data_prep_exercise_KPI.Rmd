@@ -34,7 +34,7 @@ For now let's assume we know what our columns mean.
 ##### Are there any missing values?
 As a first task, try to find missings for a specific column only
 ```{r}
-dt_KPI_raw %>% filter(is.na(Premium))
+dt_KPI_raw %>% filter(!is.na(Premium))
 ```
 
 Can you generalize this process for the whole dataset? 
@@ -58,7 +58,7 @@ dt_KPI_raw$Segment %>% levels
 dt_KPI_raw[(dt_KPI_raw$Segment!="Big") & (dt_KPI_raw$Segment!="Small") , ]
 dt_KPI_raw[dt_KPI_raw$Expenses<0 ,]
 dt_KPI_raw[dt_KPI_raw$Losses<0 ,]
-t_KPI_raw[dt_KPI_raw$Premium<0 ,]
+dt_KPI_raw[dt_KPI_raw$Premium<0 ,]
 
 
 
