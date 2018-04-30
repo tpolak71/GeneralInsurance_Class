@@ -12,7 +12,7 @@ library(dplyr)
 library(ggplot2)
 
 # load data
-dt_KPI_raw <- read.csv("C:/Users/tomas/Documents/GeneralInsurance_Class1/data/lesson2_KPI.csv")
+dt_KPI_raw <- read.csv("../../../data/lesson2_KPI.csv")
 ```
 
 #### What type of information do we have?
@@ -26,7 +26,7 @@ It is good to know what your data contains and what the column names mean,
 usually Data Governance team could help you with this question.
 For now let's assume we know what our columns mean.
 
-##### What do the columns contain? emtpy values 
+##### What do the columns contain?
 > Hint: The function summary() might help you to answer this question
 
 ```{r}
@@ -46,7 +46,7 @@ dt_KPI_raw <- dt_KPI_raw %>% filter(!is.na(Premium))
 ##### Are there any missing values?
 As a first task, try to find missings for a specific column only
 ```{r}
-dt_KPI_raw %>% filter(!is.na(Premium))
+dt_KPI_raw$Business %>% is.na %>% table
 ```
 
 Can you generalize this process for the whole dataset? 
@@ -62,18 +62,7 @@ Which vaules are not allowed for specific columns? Let's have a look at individu
 > Hint: Be prepared to deal with continuous and categorical values as well
 
 ```{r}
-dt_KPI_raw %>% glimpse
-dt_KPI_raw$Unit[1:15]
-dt_KPI_raw$Region %>% levels
-dt_KPI_raw$UWR.Plan. %>% typeof
-dt_KPI_raw$Segment %>% levels
-dt_KPI_raw[(dt_KPI_raw$Segment!="Big") & (dt_KPI_raw$Segment!="Small") , ]
-dt_KPI_raw[dt_KPI_raw$Expenses<0 ,]
-dt_KPI_raw[dt_KPI_raw$Losses<0 ,]
-dt_KPI_raw[dt_KPI_raw$Premium<0 ,]
-
-
-
+# your code
 ```
 
 
@@ -82,11 +71,7 @@ dt_KPI_raw[dt_KPI_raw$Premium<0 ,]
 #### Correction of defects 
 ##### What is the feasible way to repair missing values? (e.g we can use mean for continuous vars, what about categorical?)
 ```{r}
-#summary(dt_KPI_raw)
-row.has.na <- apply(dt_KPI_raw, 1, function(x){any(is.na(x))})
-sum(row.has.na)
-dt_KPI_raw.filtered <- dt_KPI_raw[!row.has.na,]
-#summary(dt_KPI_raw.filtered)
+# your code
 ```
 ##### What is the feasible way to repair values that don't make sense? (e.g Can we see negative Premium?)
 ```{r}
@@ -110,18 +95,12 @@ dt_KPI_raw %>%
 
 ##### Which Unit has the lowest Expenses? 
 ```{r}
-dt_KPI_raw %>% 
-  group_by(Unit) %>% 
-  summarize(Expenses = sum(Expenses, na.rm = TRUE)) %>% 
-  arrange(Expenses)
+# your code
 ```
 
 ##### Which Business from Unit found in the previous task had the highest Expenses? 
 ```{r}
-dt_KPI_raw %>% 
-  group_by(Business) %>% 
-  summarize(Expenses = sum(Expenses, na.rm = TRUE)) %>% 
-  arrange(desc(Expenses))
+# your code
 ```
 
 ### Basic Visualization
@@ -140,38 +119,17 @@ dt_KPI_raw %>%
 
 ##### Which Unit has the lowest Expenses? 
 ```{r}
-dt_KPI_raw %>% 
-  group_by(Unit) %>% 
-  summarize(Premium = sum(Premium, na.rm = TRUE),
-            Expenses = sum(Expenses, na.rm = TRUE),
-            Losses = sum(Losses, na.rm = TRUE)
-  ) %>% 
-  ggplot(aes(x = Unit, -Expenses, y = Expenses)) + 
-  geom_col()
+# your code
 ```
 
 ##### Which Business from Unit found in the previous task had the highest Expenses? 
 ```{r}
-dt_KPI_raw %>% 
-  group_by(Business) %>% 
-  summarize(Premium = sum(Premium, na.rm = TRUE),
-            Expenses = sum(Expenses, na.rm = TRUE),
-            Losses = sum(Losses, na.rm = TRUE)
-  ) %>% 
-  ggplot(aes(x = reorder(Business, -Premium), y = Premium)) + 
-  geom_col()
+# your code
 ```
 
 ##### Bonus - Show all Costs Insurance Company has as a stacked bar for Expenses and Losses grouped by Units
 ```{r}
-dt_KPI_raw %>% 
-  group_by(Unit) %>% 
-  summarize(
-            Expenses = sum(Expenses, na.rm = TRUE),
-            Losses = sum(Losses, na.rm = TRUE)
-  ) %>% 
-  ggplot(aes(x = Unit, -Losses, y = Expenses)) + 
-  geom_col()
+# your code
 ```
 
 Reflection - write a short comment to your notes in repository on what do you think is the best and the worst Unit performer.
@@ -183,10 +141,7 @@ Feel free to do more data exploration.
 ## Building KPIs 
 ##### Is there a better way to look into Losses/Expenses/Premium information?
 ```{r}
-Premium/Expenses
-Premium/Losses
-Losses/Premium
-Expenses + Losses / Premium #...Ratio indicators
+# your code
 ```
 
 
@@ -233,24 +188,18 @@ Feel free to do more data exploration.
 
 ##### How could be absolute performance defined?
 ```{r}
-mutate(uwr=Premium-Expenses-Losses) #UWR
+# your code
 ```
 
 
 ##### Which Unit looks pretty good in terms of UWR? 
 ```{r}
-dt_KPI_raw %>%  mutate(uwr=Premium-Expenses-Losses) %>% 
- group_by(Unit) %>% 
-  summarize(uwr = sum(uwr, na.rm = TRUE)) %>%arrange(desc(uwr))
-# Unit 7 looks the best
+# your code
 ```
 
 ##### Which Business of previous Unit looks bad in terms of UWR? 
 ```{r}
-dt_KPI_raw %>%  mutate(uwr=Premium-Expenses-Losses) %>% 
- group_by(Business) %>% 
-  summarize(uwr = sum(uwr, na.rm = TRUE)) %>%arrange(uwr)
-# Combined looks bad because of poor UWR value
+# your code
 ```
 
 Reflection again - write a short comment to your notes in repository on what do you think is the best and the worst Unit performer based on what you have learned recently. Feel free to do more data exploration.
