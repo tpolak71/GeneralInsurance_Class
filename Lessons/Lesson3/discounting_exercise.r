@@ -83,14 +83,27 @@ plot(GenIns, lattice=TRUE)
 # Use the data provided in exercise 2 and try to come up with an estimates of the average duration. 
 # How does it work? Well, discounting apart, in what year does the average payment happen? 
 # HINT: (Here you definitely use paid claims, and it is enough to calculate weighted average of incremental payment)
+library(dplyr)
+library(ggplot2)
+library(ChainLadder)
+dt_KPI <- read.csv("data/lesson2_KPI.csv")
+dt_LatestView <- read.csv("data/lesson3_latestView.csv")
+dt_PaidCase_original <- read.csv("data/lesson3_PaidCase.csv")
+
+Paid_HH_sml <- dt_PaidCase_original %>% 
+  filter(Business == "House" & ClaimSize == "Small" & dataset_type == "PAID")  %>% 
+  as.triangle(origin="ay", dev="dy", value="SumOfamount")
+
 
 ## STEP1: get the weights of incremental paid triangle => this is what we are intrested in because individual payments matter
-
-
+Paid_HH_sml_Incremental<-cum2incr(Paid_HH_sml)
+vahy<-attr(ata(Paid_HH_sml_Incremental),"vwtd")
+vahy
 
 ## STEP2: average duration (calculate a weighted sum, where the weight is the number of year/total cummulative paid sum)
 
-
+average_duration<-sum(vahy*c(1:9)/sum(vahy))
+average_duration
 
 # Does the value calculated correspond to your assumed value for the given business in Exercise 2? Comment on the findings in your notes...
 
